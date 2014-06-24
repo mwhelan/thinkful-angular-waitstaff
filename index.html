@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Waitstaff Calculator</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="Content/bootstrap.css" />
+    <!--<link href="plugins/bootstrap-validator/css/bootstrapValidator.css" rel="stylesheet" />-->
+    <link rel="stylesheet" href="Content/styles.css">
+</head>
+<body ng-controller="MealController">
+    <div class="container">
+        <!-- header -->
+        <div class="row">
+            <header>
+                <h1>Waitstaff Calculator</h1>
+            </header>
+        </div>
+
+        <!-- game -->
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Enter the Meal Details</h2>
+            </div>
+            
+            <div class="col-sm-6">
+                <div class="row">
+                    <h2>Customer Charges</h2>
+                </div>
+                <div class="row">
+                    <h2>My Earnings Info</h2>
+                </div>
+            </div>
+
+        </div>
+    </div> <!-- /container -->
+
+    <!-- JavaScript -->
+    <script src="Scripts/jquery-2.1.1.js"></script>
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/bootstrap.js"></script>
+    <!--<script src="plugins/bootstrap-validator/js/bootstrapValidator.js"></script>-->
+    <script src="app/app.js"></script>
+    <script src="app/waitstaff/MealController.js"></script>
+</body>
+</html>
