@@ -9,33 +9,114 @@
     <!--<link href="plugins/bootstrap-validator/css/bootstrapValidator.css" rel="stylesheet" />-->
     <link rel="stylesheet" href="Content/styles.css">
 </head>
-<body ng-controller="MealController">
+<body ng-controller="MealController as vm">
     <div class="container">
         <!-- header -->
-        <div class="row">
-            <header>
-                <h1>Waitstaff Calculator</h1>
-            </header>
-        </div>
+        <header class="row">
+            <h1 class="text-center">Waitstaff Calculator</h1>
+        </header>
 
         <!-- game -->
         <div class="row">
-            <div class="col-sm-6">
-                <h2>Enter the Meal Details</h2>
-            </div>
-            
-            <div class="col-sm-6">
-                <div class="row">
-                    <h2>Customer Charges</h2>
-                </div>
-                <div class="row">
-                    <h2>My Earnings Info</h2>
+            <div class="col-lg-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Enter the Meal Details
+                    </div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" role="form" novalidate>
+                            <div class="form-group">
+                                <label for="baseMealPrice" class="col-sm-4 control-label">Base Meal Price</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" id="baseMealPrice">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="taxRate" class="col-sm-4 control-label">Tax Rate</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" id="taxRate">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="tipPercentage" class="col-sm-4 control-label">Tip Percentage</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" id="tipPercentage">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel-footer text-center">
+                        <button class="btn btn-success" type="submit">Submit</button>
+                        <button class="btn btn-success">Cancel</button>
+                    </div>
                 </div>
             </div>
 
+            <div class="col-lg-5 col-lg-offset-1">
+                <div class="row">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Customer Charges
+                        </div>
+                        <div class="panel-body">
+                            <fieldset class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="subTotal" class="col-sm-4 control-label">Subtotal</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="subTotal" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tip" class="col-sm-4 control-label">Tip</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="tip" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="totalPrice" class="col-sm-4 control-label">Total</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="totalPrice" disabled>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            My Earnings Info
+                        </div>
+                        <div class="panel-body">
+                            <fieldset class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="tipTotal" class="col-sm-4 control-label">Tip Total</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="tipTotal" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mealCount" class="col-sm-4 control-label">Meal count</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="mealCount" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="averageTip" class="col-sm-4 control-label">Average Tip/Meal</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" id="averageTip" disabled>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
-    </div> <!-- /container -->
 
+    </div> <!-- /container -->
     <!-- JavaScript -->
     <script src="Scripts/jquery-2.1.1.js"></script>
     <script src="Scripts/angular.js"></script>
