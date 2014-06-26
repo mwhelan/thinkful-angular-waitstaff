@@ -6,53 +6,77 @@
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="Content/bootstrap.css" />
-    <!--<link href="plugins/bootstrap-validator/css/bootstrapValidator.css" rel="stylesheet" />-->
+    <!--<link rel="stylesheet" href="Content/bootstrapValidator.css" />-->
     <link rel="stylesheet" href="Content/styles.css">
 </head>
-<body ng-controller="MealController as vm">
+<body ng-controller="MealController">
+    <!-- header -->
+    <header class="row">
+        <h1 class="text-center"><span style="color:white">waitstaff</span><span style="color:rgb(83, 213, 255);">calculator</span></h1>
+    </header>
+
     <div class="container">
-        <!-- header -->
-        <header class="row">
-            <h1 class="text-center">Waitstaff Calculator</h1>
-        </header>
 
-        <!-- game -->
+        <!-- data row -->
         <div class="row">
-            <div class="col-lg-6">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        Enter the Meal Details
-                    </div>
-                    <div class="panel-body">
-                        <form class="form-horizontal" role="form" novalidate>
-                            <div class="form-group">
-                                <label for="baseMealPrice" class="col-sm-4 control-label">Base Meal Price</label>
+            <!-- meal details-->
+            <form class="form-horizontal" role="form" name="mealForm" novalidate ng-submit="addMeal()">
+                <div class="col-lg-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Enter the Meal Details
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group" ng-class="{'has-error': mealForm.baseMealPrice.$invalid && !mealForm.baseMealPrice.$pristine}">
+                                <label for="baseMealPrice" class="col-sm-4 control-label">Base Meal Price ($)</label>
                                 <div class="col-sm-8">
-                                    <input type="number" class="form-control" id="baseMealPrice">
+                                    <input name="baseMealPrice" type="number" class="form-control" ng-model="data.price" min="0.01" placeholder="Enter meal price">
+                                    <p ng-show="mealForm.baseMealPrice.$invalid && !mealForm.baseMealPrice.$pristine" class="error-message">Please enter the meal price</p>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="taxRate" class="col-sm-4 control-label">Tax Rate</label>
+                            <div class="form-group" ng-class="{'has-error': mealForm.taxRate.$invalid && !mealForm.taxRate.$pristine}">
+                                <label for="taxRate" class="col-sm-4 control-label">Tax Rate (%)</label>
                                 <div class="col-sm-8">
-                                    <input type="number" class="form-control" id="taxRate">
+                                    <input name="taxRate" type="number" class="form-control" ng-model="data.taxRate" min="1" max="100" placeholder="Enter tax rate">
+                                    <p ng-show="mealForm.taxRate.$invalid && !mealForm.taxRate.$pristine" class="error-message">Please enter a number between 1 and 100</p>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="tipPercentage" class="col-sm-4 control-label">Tip Percentage</label>
+                            <div class="form-group" ng-class="{'has-error': mealForm.tipPercentage.$invalid && !mealForm.tipPercentage.$pristine}">
+                                <label for="tipPercentage" class="col-sm-4 control-label">Tip Rate (%)</label>
                                 <div class="col-sm-8">
-                                    <input type="number" class="form-control" id="tipPercentage">
+                                    <input name="tipPercentage" type="number" class="form-control" ng-model="data.tipPercentage" min="1" max="100" placeholder="Enter tip percentage">
+                                    <p ng-show="mealForm.tipPercentage.$invalid && !mealForm.tipPercentage.$pristine" class="error-message">Please enter a number between 1 and 100</p>
                                 </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="panel-footer text-center">
-                        <button class="btn btn-success" type="submit">Submit</button>
-                        <button class="btn btn-success">Cancel</button>
-                    </div>
-                </div>
-            </div>
+                            <!--<ul>
+                                <li>Form State:
+                                    <ul>
+                                        <li ng-show="mealForm.$pristine">Pristine</li>
+                                        <li ng-show="mealForm.$dirty">Dirty</li>
+                                        <li ng-show="mealForm.$valid">valid</li>
+                                        <li ng-show="mealForm.$invalid">invalid</li>
+                                    </ul>
+                                </li>
+                                <li ng-repeat="(key, errors) in mealForm.$error track by $index">
+                                    <strong>{{ key }}</strong> errors
+                                    <ul>
+                                        <li ng-repeat="e in errors">{{ e.$name }} has an error: <strong>{{ key }}</strong>.</li>
+                                    </ul>
+                                </li>
+                            </ul>-->
 
-            <div class="col-lg-5 col-lg-offset-1">
+                        </div>
+                        <div class="panel-footer">
+                            <button type="submit" class="btn btn-success" ng-disabled="mealForm.$pristine">Submit</button>
+                            <button type="button" class="btn btn-success" ng-disabled="mealForm.$pristine" ng-click="cancel()">Cancel</button>
+                            <button type="button" class="btn btn-danger pull-right" ng-disabled="mealForm.$pristine" ng-click="reset()">Reset</button>
+                        </div>
+                    </div> <!-- /panel-->
+                </div> <!-- /meal details-->
+            </form>
+
+            <div class="col-lg-6">
+                <!-- customer charges -->
                 <div class="row">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -63,26 +87,28 @@
                                 <div class="form-group">
                                     <label for="subTotal" class="col-sm-4 control-label">Subtotal</label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="subTotal" disabled>
+                                        <span class="form-control" id="subTotal">{{data.subtotal | currency}}</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="tip" class="col-sm-4 control-label">Tip</label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="tip" disabled>
+                                        <span class="form-control" id="tip">{{data.tip | currency}}</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="totalPrice" class="col-sm-4 control-label">Total</label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="totalPrice" disabled>
-                                    </div>
+                                        <span class="form-control" id="totalPrice">{{data.totalPrice | currency}}</span>
+                                   </div>
                                 </div>
                             </fieldset>
                         </div>
 
                     </div>
                 </div>
+                
+                <!-- earnings info-->
                 <div class="row">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -93,20 +119,20 @@
                                 <div class="form-group">
                                     <label for="tipTotal" class="col-sm-4 control-label">Tip Total</label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="tipTotal" disabled>
-                                    </div>
+                                        <span class="form-control" id="tipTotal">{{data.tipTotal | currency}}</span>
+                                   </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="mealCount" class="col-sm-4 control-label">Meal count</label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="mealCount" disabled>
-                                    </div>
+                                        <span class="form-control" id="mealCount">{{data.mealCount}}</span>
+                                   </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="averageTip" class="col-sm-4 control-label">Average Tip/Meal</label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="averageTip" disabled>
-                                    </div>
+                                        <span class="form-control" id="averageTip">{{data.averageTip | currency}}</span>
+                                   </div>
                                 </div>
                             </fieldset>
                         </div>
@@ -121,7 +147,7 @@
     <script src="Scripts/jquery-2.1.1.js"></script>
     <script src="Scripts/angular.js"></script>
     <script src="Scripts/bootstrap.js"></script>
-    <!--<script src="plugins/bootstrap-validator/js/bootstrapValidator.js"></script>-->
+    <!--<script src="Scripts/bootstrapValidator.js"></script>-->
     <script src="app/app.js"></script>
     <script src="app/waitstaff/MealController.js"></script>
 </body>
