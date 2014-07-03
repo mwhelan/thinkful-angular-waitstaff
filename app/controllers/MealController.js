@@ -3,13 +3,11 @@
 
     angular.module('app')
         .controller("EarningsController", function ($scope, totalEarnings) {
-            $scope.data = totalEarnings;
+            $scope.data = totalEarnings.get();
 
             $scope.reset = function () {
-                totalEarnings.tipTotal = 0;
-                totalEarnings.mealCount = 0;
-                totalEarnings.averageTip = 0;
-                $scope.data = totalEarnings;
+                totalEarnings.reset();
+                $scope.data = totalEarnings.get();
             }
         })
         .controller("MealController", function ($scope, totalEarnings) {
@@ -26,9 +24,7 @@
                 meal.tip = meal.subtotal * meal.tipPercentage / 100;
                 meal.totalPrice = meal.subtotal + meal.tip;
 
-                totalEarnings.tipTotal = totalEarnings.tipTotal += meal.tip;
-                totalEarnings.mealCount++;
-                totalEarnings.averageTip = totalEarnings.tipTotal / totalEarnings.mealCount;
+                totalEarnings.add(meal.tip);
 
                 $scope.mealForm.$setPristine();
 
