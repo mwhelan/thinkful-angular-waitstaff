@@ -7,9 +7,10 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="Content/bootstrap.css" />
     <link rel="stylesheet" href="Content/font-awesome.min.css">
+    <link rel="stylesheet" href="Content/animate.css" />
     <link rel="stylesheet" href="Content/styles.css">
 </head>
-<body ng-controller="MealController" ng-class="{loading: isLoading}">
+<body ng-controller="MealController">
     <!-- header -->
     <header class="row text-center">
         <h1><span style="color:white">waitstaff</span><span style="color:rgb(83, 213, 255);">calculator</span></h1>
@@ -18,9 +19,9 @@
         <a href="#/my-earnings">My Earnings</a>
     </header>
 
-    <div class="container animate-view-container">
+    <div class="container">
 
-        <div ng-view class="animate-view"></div>
+        <div ng-view></div>
 
     </div> <!-- /container -->
     <!-- JavaScript -->
